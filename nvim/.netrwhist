@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code'
-let g:netrw_dirhist_2='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code/src'
-let g:netrw_dirhist_3='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code'
-let g:netrw_dirhist_4='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code/src'
-let g:netrw_dirhist_5='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code'
-let g:netrw_dirhist_6='/home/julien/.config/Screeps/scripts/72_197_52_100___21025/default/code/src'

@@ -19,9 +19,14 @@ syntax on
 set wrap! "No wrapping
 " set mouse=a
 set clipboard=unnamedplus
+set splitbelow
+set splitright
 
 set wildmenu
 set wildmode=list:longest
+
+" disable netrwhist log file
+let g:netrw_dirhistmax = 0
 
 " Fuzzy finder
 let g:ctrlp_show_hidden = 1
@@ -51,3 +56,9 @@ augroup numbertoggle
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
+" go-vim plugin config
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
