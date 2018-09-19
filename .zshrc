@@ -12,6 +12,7 @@ export PATH=$PATH:~/bin
 # == Aliases
 #
 alias redev='tmux at -t'
+alias killdev='tmux kill-session -t'
 
 # == ZSH specific
 #
