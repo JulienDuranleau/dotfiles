@@ -9,10 +9,14 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export PATH=$PATH:~/bin
 
+# == Rust
+source $HOME/.cargo/env
+
 # == Aliases
 #
 alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
+alias weather='curl wttr.in/Joliette'
 
 # == ZSH specific
 #
