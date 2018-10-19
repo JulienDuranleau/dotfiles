@@ -6,6 +6,7 @@ Plug 'kaicataldo/material.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
@@ -34,6 +35,7 @@ endif
 " -- generic configs
 filetype plugin indent on
 syntax on
+set cursorline
 set number relativenumber           " line numbers relative to current line
 set numberwidth=4                   " line number width
 set tabstop=4                        
@@ -45,6 +47,7 @@ set clipboard=unnamedplus           " Share clipboard with OS
 set history=1000
 set backspace=indent,eol,start
 set scrolloff=4                     " Number of lines below before scroll
+set wildignore+=*/.git/*,*/tmp/*,*.swp
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
@@ -57,6 +60,9 @@ set wildmode=list:longest
 
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
+au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
+
+hi CursorLine cterm=NONE ctermbg=234 guibg=#202020
 " -- Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
@@ -96,6 +102,12 @@ nmap <F5> :NERDTreeToggle<CR>
 
 " -- CtrlP Fuzzy finder plugin
 let g:ctrlp_show_hidden = 1
+" Set color for line selection
+if executable('rg') " Use ripgrep without cache
+    set grepprg=rg\ --color=never
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    let g:ctrlp_use_caching = 0
+endif
 
 " -- Javascript plugin
 let g:javascript_plugin_jsdoc = 1
@@ -106,3 +118,6 @@ let g:rustfmt_autosave = 1
 " -- Ncm2 Autocompletion plugin
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
