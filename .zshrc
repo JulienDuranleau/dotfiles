@@ -9,6 +9,11 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export PATH=$PATH:~/bin
 
+# == Disable ctrl-s to enable it in nvim
+stty start undef
+stty stop undef
+setopt noflowcontrol
+
 # == Rust
 source $HOME/.cargo/env
 

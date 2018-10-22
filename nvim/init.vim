@@ -18,6 +18,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-cssomni'
 Plug 'ncm2/ncm2-tern'
 Plug 'ncm2/ncm2-racer'
+Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
 Plug 'phpactor/ncm2-phpactor'
 Plug 'ncm2/ncm2-html-subscope'
 Plug 'ncm2/ncm2-markdown-subscope'
@@ -58,6 +59,9 @@ set foldlevel=4                     " Fold level when opening files
 set wildmenu
 set wildmode=list:longest
 
+set list                            " Enable invisible character
+set listchars=tab:▸\ ,eol:¬         " Specifiy characters for invisibles
+
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
@@ -82,6 +86,13 @@ nnoremap <F1> zM
 nnoremap <F2> zMzr
 nnoremap <F3> zMzrzr
 nnoremap <F4> zR
+
+" -- Save
+nmap <c-s> :w<cr>
+imap <c-s> <esc>:w<cr>
+
+" -- Genral vim aliases
+inoremap jj <ESC>
 
 " -- Auto line number type toggle
 augroup numbertoggle
@@ -121,3 +132,9 @@ set completeopt=noinsert,menuone,noselect
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" -- Leader commands
+map <SPACE> <leader>
+nnoremap <leader>v V`]                                      " Select previously pasted text
+nnoremap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>        " Open vimrc
+
