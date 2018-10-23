@@ -7,7 +7,7 @@ export PATH=$PATH:/usr/local/go/bin
 export EDITOR=nvim
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/scripts
 
 # == Disable ctrl-s to enable it in nvim
 stty start undef
@@ -18,7 +18,6 @@ setopt noflowcontrol
 source $HOME/.cargo/env
 
 # == Aliases
-#
 alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'

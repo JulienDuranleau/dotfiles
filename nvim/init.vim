@@ -7,6 +7,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
@@ -49,6 +50,7 @@ set history=1000
 set backspace=indent,eol,start
 set scrolloff=4                     " Number of lines below before scroll
 set wildignore+=*/.git/*,*/tmp/*,*.swp
+set iskeyword+=-                    " Add "-" to the w text object
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
@@ -94,6 +96,12 @@ imap <c-s> <esc>:w<cr>
 " -- Genral vim aliases
 inoremap jj <ESC>
 
+" -- Pane navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
 " -- Auto line number type toggle
 augroup numbertoggle
     autocmd!
@@ -135,6 +143,9 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " -- Leader commands
 map <SPACE> <leader>
-nnoremap <leader>v V`]                                      " Select previously pasted text
-nnoremap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>        " Open vimrc
-
+nmap <leader>v V`]                                      " Select previously pasted text
+nmap <leader>v V`]                                      " Select previously pasted text
+nmap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>        " Open vimrc
+nmap <leader>q :q<cr>                                   " Quit file
+" Fuzzy search word under cursor
+nmap <leader>p :CtrlP<CR><C-\>w
