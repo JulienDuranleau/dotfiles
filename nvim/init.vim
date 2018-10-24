@@ -1,6 +1,9 @@
+let g:mapleader = "\<Space>"
+
 call plug#begin('~/.config/nvim/plugged')
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install ========all' }
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'kaicataldo/material.vim'
 Plug 'vim-airline/vim-airline'
@@ -25,7 +28,7 @@ Plug 'ncm2/ncm2-html-subscope'
 Plug 'ncm2/ncm2-markdown-subscope'
 call plug#end()
 
-" -- Theme
+" ======== Theme
 let g:material_theme_style = 'dark'
 let g:airline_theme = 'material'
 set background=dark
@@ -34,7 +37,7 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-" -- generic configs
+" ======== generic configs
 filetype plugin indent on
 syntax on
 set cursorline
@@ -69,7 +72,7 @@ let g:netrw_dirhistmax = 0          " disable netrwhist log file
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
 
 hi CursorLine cterm=NONE ctermbg=234 guibg=#202020
-" -- Disable arrow keys
+" ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
 no <right> <Nop>
@@ -83,69 +86,69 @@ vno <left> <Nop>
 vno <right> <Nop>
 vno <up> <Nop>
 
-" -- Folds shorcuts
+" ======== Folds shorcuts
 nnoremap <F1> zM
 nnoremap <F2> zMzr
 nnoremap <F3> zMzrzr
 nnoremap <F4> zR
 
-" -- Save
+" ======== Save
 nmap <c-s> :w<cr>
 imap <c-s> <esc>:w<cr>
 
-" -- Genral vim aliases
+" ======== Genral vim aliases
 inoremap jj <ESC>
 
-" -- Pane navigation
+" ======== Pane navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" -- Auto line number type toggle
+" ======== Fuzzy find
+nnoremap <C-p> :Files<cr>
+nnoremap <C-g> :Rg<cr>
+
+" ======== Auto line number type toggle
 augroup numbertoggle
     autocmd!
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" -- go-vim plugin config
+" ======== go-vim plugin config
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 
-" -- NERDTree plugin
+" ======== NERDTree plugin
 let NERDTreeShowHidden=1
 nmap <F5> :NERDTreeToggle<CR>
 
-" -- CtrlP Fuzzy finder plugin
-let g:ctrlp_show_hidden = 1
-" Set color for line selection
-if executable('rg') " Use ripgrep without cache
-    set grepprg=rg\ --color=never
-    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-    let g:ctrlp_use_caching = 0
-endif
-
-" -- Javascript plugin
+" ======== Javascript plugin
 let g:javascript_plugin_jsdoc = 1
 
-" -- Rust plugin
+" ======== Rust plugin
 let g:rustfmt_autosave = 1
 
-" -- Ncm2 Autocompletion plugin
+" ======== Ncm2 Autocompletion plugin
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" -- Leader commands
-map <SPACE> <leader>
-nmap <leader>v V`]                                      " Select previously pasted text
-nmap <leader>v V`]                                      " Select previously pasted text
-nmap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>        " Open vimrc
-nmap <leader>q :q<cr>                                   " Quit file
-" Fuzzy search word under cursor
-nmap <leader>p :CtrlP<CR><C-\>w
+" ======== Leader commands
+
+" Select previously pasted text
+nmap <leader>v V`]
+" Open vimrc
+nmap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>
+" Quit file
+nnoremap <leader>q :q<cr>
+" Fuzzy search word under cursor in file names
+nmap <leader>p :FZF -q <C-R><C-w><cr>
+" Fuzzy search word under cursor in file contents
+nmap <Leader>g :Rg <C-R><C-w><cr>
+

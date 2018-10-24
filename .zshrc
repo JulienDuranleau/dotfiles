@@ -9,21 +9,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export PATH=$PATH:~/scripts
 
-# == Disable ctrl-s to enable it in nvim
-stty start undef
-stty stop undef
-setopt noflowcontrol
-
-# == Rust
-source $HOME/.cargo/env
-
-# == Aliases
-alias redev='tmux at -t'
-alias killdev='tmux kill-session -t'
-alias weather='curl wttr.in/Joliette'
-
 # == ZSH specific
-#
 plugins=(git)
 
 export ZSH="/home/julien/.oh-my-zsh"
@@ -36,3 +22,21 @@ source $ZSH/oh-my-zsh.sh
 prompt_dir() {                                                              
    prompt_segment blue white '%1d'
 }  
+
+# == Rust
+source $HOME/.cargo/env
+
+# == Disable ctrl-s to enable it in nvim
+stty start undef
+stty stop undef
+setopt noflowcontrol
+
+# == Aliases
+# alias dev=@See scripts/dev
+alias redev='tmux at -t'
+alias killdev='tmux kill-session -t'
+alias weather='curl wttr.in/Joliette'
+alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)'
+
+# == Enable FZF shortcuts and completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
