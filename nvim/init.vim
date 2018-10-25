@@ -14,6 +14,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
+Plug 'machakann/vim-highlightedyank'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
@@ -66,6 +67,8 @@ set wildmode=list:longest
 
 set list                            " Enable invisible character
 set listchars=tab:▸\ ,eol:¬         " Specifiy characters for invisibles
+
+:set inccommand=split
 
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
@@ -132,6 +135,9 @@ let g:javascript_plugin_jsdoc = 1
 " ======== Rust plugin
 let g:rustfmt_autosave = 1
 
+" ======== Yank highlight plugin
+let g:highlightedyank_highlight_duration = 1000
+
 " ======== Ncm2 Autocompletion plugin
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
@@ -151,4 +157,6 @@ nnoremap <leader>q :q<cr>
 nmap <leader>p :FZF -q <C-R><C-w><cr>
 " Fuzzy search word under cursor in file contents
 nmap <Leader>g :Rg <C-R><C-w><cr>
+" Fuzzy search word under cursor in file contents
+nmap <Leader>b :Buffers<cr>
 

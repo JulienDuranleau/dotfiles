@@ -37,6 +37,8 @@ alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'
 alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)'
+alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 
 # == Enable FZF shortcuts and completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --follow'
