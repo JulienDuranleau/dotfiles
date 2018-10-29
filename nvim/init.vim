@@ -2,7 +2,7 @@ let g:mapleader = "\<Space>"
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install ========all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'kaicataldo/material.vim'
@@ -75,7 +75,10 @@ let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
 
-hi CursorLine cterm=NONE ctermbg=234 guibg=#202020
+hi CursorLine guibg=#202020
+hi DiffAdd guibg=#33BB33
+hi DiffChange guibg=#BBBB33
+hi DiffText guibg=#BB3333
 " ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
@@ -154,6 +157,15 @@ set completeopt=noinsert,menuone,noselect
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" ======== Easy Align plugin
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+"xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+"nmap ga <Plug>(EasyAlign)
+
+
+
+
 " ======== Leader commands
 
 " Select previously pasted text
@@ -170,11 +182,8 @@ nmap <Leader>g :Rg <C-R><C-w><cr>
 nmap <Leader>b :Buffers<cr>
 " Fuzzy search word under cursor in buffer content
 nmap <Leader>f :BLines <C-R><C-w><cr>
+" Prev/Next diff shortcuts
+nmap <Leader>z ]c <cr>
+nmap <Leader>x [c <cr>
 
 
-" ========= Autocommands
-
-" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost init.vim source $MYVIMRC
-endif
