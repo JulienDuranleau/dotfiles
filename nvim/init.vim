@@ -75,10 +75,13 @@ let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
 
+let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
+
 hi CursorLine guibg=#202020
 hi DiffAdd guibg=#33BB33
 hi DiffChange guibg=#BBBB33
 hi DiffText guibg=#BB3333
+hi NonText guifg=#3A3A3A
 " ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
@@ -144,7 +147,7 @@ let g:rustfmt_autosave = 1
 let g:highlightedyank_highlight_duration = 1000
 
 " ======== DelemitMate plugin
-"let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
+let g:delimitMate_matchpairs = "(:),[:],{:}"
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
@@ -159,9 +162,9 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ======== Easy Align plugin
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-"xmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-"nmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 
 
