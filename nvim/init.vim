@@ -127,6 +127,13 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
+" ======== Hide line background for non-focused splits
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
+
 " ======== go-vim plugin config
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
