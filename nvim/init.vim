@@ -17,6 +17,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
+Plug 'airblade/vim-gitgutter'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
@@ -53,13 +54,14 @@ set backspace=indent,eol,start
 set scrolloff=4                     " Number of lines below before scroll
 set wildignore+=*/.git/*,*/tmp/*,*.swp
 set iskeyword+=-                    " Add "-" to the w text object
-set timeoutlen=600
+set timeoutlen=600                  " Leader timeout
+set updatetime=100                  " Update speed for git-gutter
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
 
 set foldmethod=indent               " Fold levels based on indent level
-set foldlevel=4                     " Fold level when opening files
+set foldlevel=10                     " Fold level when opening files
 
 set wildmenu
 set wildmode=list:longest
