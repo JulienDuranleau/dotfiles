@@ -20,7 +20,7 @@ ZSH_THEME="agnoster"
 source $ZSH/oh-my-zsh.sh
 
 prompt_dir() {                                                              
-   prompt_segment blue white '%1d'
+   prompt_segment blue black '%1d'
 }  
 
 # == Rust
@@ -37,8 +37,10 @@ alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'
 alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)'
+alias showdev='ngrok start --config ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)/ngrok.yml'
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
+alias devfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
 
 # == Enable FZF shortcuts and completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

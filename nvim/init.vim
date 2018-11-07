@@ -5,17 +5,18 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'kaicataldo/material.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
+Plug 'srcery-colors/srcery-vim'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
@@ -31,13 +32,9 @@ Plug 'ncm2/ncm2-markdown-subscope'
 call plug#end()
 
 " ======== Theme
-let g:material_theme_style = 'dark'
-let g:airline_theme = 'material'
-set background=dark
-colorscheme material
-if (has("termguicolors"))
-    set termguicolors
-endif
+set t_Co=256
+colorscheme srcery
+let g:airline_theme='srcery'
 
 " ======== generic configs
 filetype plugin indent on
@@ -56,6 +53,7 @@ set backspace=indent,eol,start
 set scrolloff=4                     " Number of lines below before scroll
 set wildignore+=*/.git/*,*/tmp/*,*.swp
 set iskeyword+=-                    " Add "-" to the w text object
+set timeoutlen=600
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
@@ -195,5 +193,8 @@ nmap <Leader>f :BLines <C-R><C-w><cr>
 " Prev/Next diff shortcuts
 nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
-
+" Add ; at the end of the line
+nmap <Leader>; mcA;<esc>`c
+imap <Leader>; <esc>mcA;<esc>`ca
+vmap <Leader>; :'<,'>norm A;<esc>
 
