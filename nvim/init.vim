@@ -38,8 +38,8 @@ colorscheme srcery
 let g:airline_theme='srcery'
 
 " ======== generic configs
-filetype plugin indent on
 syntax on
+filetype plugin indent on
 set cursorline
 set number relativenumber           " line numbers relative to current line
 set numberwidth=4                   " line number width
@@ -77,11 +77,12 @@ au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October t
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
 
-hi CursorLine guibg=#202020
-hi DiffAdd guibg=#33BB33
-hi DiffChange guibg=#BBBB33
-hi DiffText guibg=#BB3333
-hi NonText guifg=#3A3A3A
+" hi CursorLine guibg=#202020
+" hi DiffAdd guibg=#33BB33
+" hi DiffChange guibg=#BBBB33
+" hi DiffText guibg=#BB3333
+hi NonText ctermfg=236
+" hi NonText ctermfg=7 guifg=gray
 " ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
