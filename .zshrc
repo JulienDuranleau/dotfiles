@@ -12,9 +12,9 @@ export PATH=$PATH:~/scripts
 # == ZSH specific
 plugins=(git)
 
-export ZSH="/home/julien/.oh-my-zsh"
+export ZSH=~/".oh-my-zsh"
 
-DEFAULT_USER="julien"
+DEFAULT_USER="$(whoami)"
 ZSH_THEME="agnoster"
 
 source $ZSH/oh-my-zsh.sh
