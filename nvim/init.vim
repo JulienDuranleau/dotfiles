@@ -11,13 +11,13 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
-Plug 'airblade/vim-gitgutter'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
@@ -77,12 +77,12 @@ au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October t
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
 
-" hi CursorLine guibg=#202020
-" hi DiffAdd guibg=#33BB33
-" hi DiffChange guibg=#BBBB33
-" hi DiffText guibg=#BB3333
+hi DiffAdd ctermbg=22
+"hi DiffChange guibg=#BBBB33
+hi DiffText ctermbg=26
 hi NonText ctermfg=236
-" hi NonText ctermfg=7 guifg=gray
+hi iCursor ctermfg=15
+hi Normal ctermbg=NONE
 " ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
@@ -155,7 +155,7 @@ let g:rustfmt_autosave = 1
 let g:highlightedyank_highlight_duration = 1000
 
 " ======== DelemitMate plugin
-let g:delimitMate_matchpairs = "(:),[:],{:}"
+let g:delimitMate_matchpairs = ""
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
@@ -198,6 +198,6 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
-imap <Leader>; <esc>mcA;<esc>`ca
+"imap <Leader>; <esc>mcA;<esc>`ca
 vmap <Leader>; :'<,'>norm A;<esc>
 
