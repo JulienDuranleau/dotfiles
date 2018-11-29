@@ -97,6 +97,14 @@ vno <left> <Nop>
 vno <right> <Nop>
 vno <up> <Nop>
 
+" ======== Visual line navigation
+nnoremap k gk
+nnoremap j gj
+"nnoremap $ g$
+nnoremap gk k
+nnoremap gj j
+"nnoremap g$ j
+
 " ======== Folds shorcuts
 nnoremap <F1> zM
 nnoremap <F2> zMzr

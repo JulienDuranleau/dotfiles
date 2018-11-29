@@ -1,5 +1,6 @@
 export ANDROID_HOME=/home/julien/Android/Sdk
 export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=${PATH}:$HOME/bin
 
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
 export PATH=$PATH:/usr/local/go/bin
@@ -36,11 +37,12 @@ setopt noflowcontrol
 alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'
-alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)'
+alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)/www'
 alias showdev='ngrok start --config ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)/ngrok.yml'
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
-alias devfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
+alias alacrittyfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
+alias gitchanged='git diff --name-status --oneline "$(git log --pretty=oneline | fzf | rg -w -o "^[0-9a-f]+")"~1 HEAD | cat'
 
 # == Enable FZF shortcuts and completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
