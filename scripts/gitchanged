@@ -1,0 +1,6 @@
+#!/bin/bash
+loghash=$(git log --pretty=oneline | fzf | rg -w -o "^[0-9a-f]+")
+
+if [ ! -z $loghash ]; then
+    git diff --name-status --oneline $loghash~1 HEAD | cat
+fi

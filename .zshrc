@@ -42,7 +42,6 @@ alias showdev='ngrok start --config ~/workbench/projects/$(ls ~/workbench/projec
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
 alias alacrittyfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
-alias gitchanged='git diff --name-status --oneline "$(git log --pretty=oneline | fzf | rg -w -o "^[0-9a-f]+")"~1 HEAD | cat'
 
 # == Enable FZF shortcuts and completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

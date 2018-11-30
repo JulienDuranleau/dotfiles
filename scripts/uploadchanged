@@ -1,0 +1,123 @@
+#!/usr/bin/env node
+
+function callCmd(cmd) {
+    const { spawn } = require('child_process')
+
+    return new Promise(resolve => {
+        const child = spawn(cmd, {
+            stdio: ['inherit', 'pipe', 'inherit'],
+            shell: true
+        })
+
+        child.stdout.setEncoding('utf-8')
+
+        child.stdout.on('readable', function() {
+            let value = child.stdout.read()
+
+            if (value !== null) {
+                resolve(value)
+            }
+        })
+    })
+}
+
+function parseGitChanged(data) {
+    const lines = data.split('\n')
+    const changes = []
+
+    for (let line of lines) {
+        if (line.length) {
+            let action = {
+                command: line[0],
+                args: line.replace(/[A-Z0-9]+\t/, '').split('\t')
+            }
+            changes.push(action)
+        }
+    }
+
+    return changes
+}
+
+function buildActionList(changes, serverConfig) {
+    const actionList = []
+
+    for (let change of changes) {
+
+        // A: addition of a file
+        // C: copy of a file into a new one
+        // D: deletion of a file
+        // M: modification of the contents or mode of a file
+        // R: renaming of a file
+        // T: change in the type of the file
+        // U: file is unmerged (you must complete the merge before it can be committed)
+        // X: "unknown" change type (most probably a bug, please report it)
+        switch(change.command) {
+           case 'A':
+           case 'M':
+               actionList.push(getUploadActionForFile(change.args[0], serverConfig))
+               break
+           case 'D':
+               actionList.push(getDeleteActionForFile(change.args[0], serverConfig))
+               break
+           case 'R':
+               actionList.push(getDeleteActionForFile(change.args[0], serverConfig))
+               actionList.push(getUploadActionForFile(change.args[1], serverConfig))
+               break
+           //case 'C':
+        }
+    }
+
+    return actionList
+}
+
+function getServerConfig() {
+    return {
+        host: 'ftp://localhost/',
+        subfolder: 'tmp/',
+        user: 'julien',
+        password: 'blank0',
+    }
+}
+
+function getUploadActionForFile(file, serverConfig) {
+    return {
+        title: `Transfer ${file}`,
+        cmd: `curl -u ${serverConfig.user}:${serverConfig.password} -T ${file} ${serverConfig.host + serverConfig.subfolder + file} --ftp-create-dirs`
+    }
+}
+
+function getDeleteActionForFile(file, serverConfig) {
+    return {
+        title: `Delete ${file}`,
+        cmd: `curl -u ${serverConfig.user}:${serverConfig.password} ${serverConfig.host} -Q "DELE ${serverConfig.subfolder + file}"`
+    }
+}
+
+async function runActions(actions) {
+    const { spawnSync } = require('child_process')
+
+    for (let action of actions) {
+        const child = spawnSync(action.cmd, {
+            //stdio: 'inherit',
+            shell: true
+        })
+
+        if (child.status === 0) {
+            console.log(`[OK] ${action.title}`)
+        } else {
+            console.log(`[ERROR] [${child.status}]`)
+            // TODO: Print error
+        }
+    }
+}
+
+async function main() {
+    const serverConfig = getServerConfig()
+    const gitChanged = await callCmd('gitchanged')
+    const changes = parseGitChanged(gitChanged)
+    const actions = buildActionList(changes, serverConfig)
+    runActions(actions)
+    // console.log(actions)
+}
+
+main()
