@@ -44,18 +44,18 @@ stty start undef
 stty stop undef
 setopt noflowcontrol
 
+# == Enable FZF shortcuts and completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --follow'
+
 # == Aliases
 # alias dev=@See scripts/dev
 alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'
-alias cddev='cd ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)/www'
-alias showdev='ngrok start --config ~/workbench/projects/$(ls ~/workbench/projects/ | fzf)/ngrok.yml'
+alias cddev='cd ~/workbench/projects/$(\ls ~/workbench/projects/ | fzf)/www'
+alias showdev='ngrok start --config ~/workbench/projects/$(\ls ~/workbench/projects/ | fzf)/ngrok.yml'
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
 alias alacrittyfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
-
-# == Enable FZF shortcuts and completion
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --follow'
 
