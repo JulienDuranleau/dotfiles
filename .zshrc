@@ -24,6 +24,12 @@ prompt_dir() {
    prompt_segment blue black '%1d'
 }  
 
+# == Dotfiles affected by mv, cp, rm...
+setopt GLOB_DOTS
+
+# == Fancier ls
+alias ls='ls --color -h -1 --group-directories-first'
+
 # == Rust
 source $HOME/.cargo/env
 

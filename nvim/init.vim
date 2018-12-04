@@ -18,6 +18,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
+Plug 'posva/vim-vue'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
