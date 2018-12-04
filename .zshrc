@@ -24,6 +24,12 @@ prompt_dir() {
    prompt_segment blue black '%1d'
 }  
 
+# == Swap escape and tab
+/usr/bin/setxkbmap -option "caps:swapescape"
+
+# == Set typing speed
+xset r rate 250 20
+
 # == Rust
 source $HOME/.cargo/env
 
