@@ -30,6 +30,12 @@ setopt GLOB_DOTS
 # == Fancier ls
 alias ls='ls --color -h -1 --group-directories-first'
 
+# == Swap escape and tab
+/usr/bin/setxkbmap -option "caps:swapescape"
+
+# == Set typing speed
+xset r rate 250 20
+
 # == Rust
 source $HOME/.cargo/env
 
