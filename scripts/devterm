@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+if [ $# -eq 2 ]; then
+    cd $2
+fi
+
+tmux new-session -s $1 \; rename-window 'Terminal' \;

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+folder=~/Pictures/wallpapers
+
+set-desktop-picture () {
+    # gnome
+    # gsettings set org.gnome.desktop.background picture-uri $1
+
+    # xfce
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorHDMI-1/workspace0/last-image --set $1
+}
+set-random-desktop-picture () {
+    set-desktop-picture $(find $folder -maxdepth 1 -type f | shuf -n1)
+}
+
+# Hide Gnome dock
+# gsettings set org.gnome.shell.extensions.dash-to-dock autohide false
+# gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
+# gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
+
+
+set-random-desktop-picture
+while sleep 300; do
+    set-random-desktop-picture
+done

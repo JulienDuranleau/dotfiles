@@ -11,6 +11,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+"Plug 'dbeniamine/cheat.sh-vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -62,7 +63,7 @@ set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
 
 set foldmethod=indent               " Fold levels based on indent level
-set foldlevel=10                     " Fold level when opening files
+set foldlevel=10                    " Fold level when opening files
 
 set wildmenu
 set wildmode=list:longest
@@ -71,6 +72,8 @@ set list                            " Enable invisible character
 set listchars=tab:▸\ ,eol:¬         " Specifiy characters for invisibles
 
 :set inccommand=split
+
+set diffopt+=vertical               " Vertical split diffs
 
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
@@ -183,6 +186,8 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" ======== Cheat.sh
+let g:CheatSheetDoNotMap=1
 
 
 
@@ -209,4 +214,9 @@ nmap <Leader>x [c <cr>
 nmap <Leader>; mcA;<esc>`c
 "imap <Leader>; <esc>mcA;<esc>`ca
 vmap <Leader>; :'<,'>norm A;<esc>
+" Cheat.sh | @see cheat.vim
+nnoremap <script> <silent> <leader>? :call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 0, '!')<CR>
+vnoremap <script> <silent> <leader>? :call cheat#cheat("", -1, -1, 2, 0, '!')<CR>
+nnoremap <script> <silent> <leader>?n :call cheat#navigate(1, 'A')<CR>
+nnoremap <script> <silent> <leader>?p :call cheat#navigate(-1,'A')<CR>
 

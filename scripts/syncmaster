@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rsync -avz /home/julien/workbench/projects/master.localhost/www/plugins/blanko/$1 ./
+
+while inotifywait -r -e modify,create,delete /home/julien/workbench/projects/master.localhost/www/plugins/blanko/$1; do
+    rsync -avz /home/julien/workbench/projects/master.localhost/www/plugins/blanko/$1 ./
+done

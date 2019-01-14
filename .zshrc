@@ -10,6 +10,8 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export PATH=$PATH:~/scripts
 
+export ZSH_DISABLE_COMPFIX=true
+
 # == ZSH specific
 plugins=(git)
 
@@ -58,4 +60,7 @@ alias showdev='ngrok start --config ~/workbench/projects/$(\ls ~/workbench/proje
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
 alias alacrittyfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
+
+# usage: how_in php list array keys
+how_in() { where="$1"; shift;IFS=+ curl "https://cht.sh/$where/$*?Q" }
 
