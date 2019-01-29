@@ -8,6 +8,8 @@ export PATH=$PATH:/usr/local/go/bin
 export EDITOR=nvim
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+export PATH=$PATH:~/.config/composer/vendor/bin
+
 export PATH=$PATH:~/scripts
 
 export ZSH_DISABLE_COMPFIX=true
@@ -33,7 +35,7 @@ setopt GLOB_DOTS
 alias ls='ls --color -h -1 --group-directories-first'
 
 # == Swap escape and tab
-/usr/bin/setxkbmap -option "caps:swapescape"
+/usr/bin/setxkbmap -option "caps:escape"
 
 # == Set typing speed
 xset r rate 250 20

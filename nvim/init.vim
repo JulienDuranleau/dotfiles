@@ -20,6 +20,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
 Plug 'posva/vim-vue'
+Plug 'leafgarland/typescript-vim'
 
 " For autocompletion
 Plug 'ncm2/ncm2'
@@ -58,6 +59,7 @@ set wildignore+=*/.git/*,*/tmp/*,*.swp
 set iskeyword+=-                    " Add "-" to the w text object
 set timeoutlen=600                  " Leader timeout
 set updatetime=100                  " Update speed for git-gutter
+set noswapfile
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
@@ -189,6 +191,9 @@ nmap ga <Plug>(EasyAlign)
 " ======== Cheat.sh
 let g:CheatSheetDoNotMap=1
 
+" ======== PHP CS Fixer
+autocmd BufWritePost *.php silent execute "!php-cs-fixer fix --using-cache=no --no-interaction %"
+
 
 
 " ======== Leader commands
@@ -212,11 +217,14 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
+nmap <Leader>, mcA,<esc>`c
 "imap <Leader>; <esc>mcA;<esc>`ca
 vmap <Leader>; :'<,'>norm A;<esc>
+vmap <Leader>, :'<,'>norm A,<esc>
 " Cheat.sh | @see cheat.vim
 nnoremap <script> <silent> <leader>? :call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 0, '!')<CR>
 vnoremap <script> <silent> <leader>? :call cheat#cheat("", -1, -1, 2, 0, '!')<CR>
 nnoremap <script> <silent> <leader>?n :call cheat#navigate(1, 'A')<CR>
 nnoremap <script> <silent> <leader>?p :call cheat#navigate(-1,'A')<CR>
-
+" PHP CS Fixer
+nmap <Leader>F :!php-cs-fixer fix --using-cache=no % <cr>

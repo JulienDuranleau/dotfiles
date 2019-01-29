@@ -33,4 +33,7 @@ ln -s ~/dotfiles/nvim ~/.config/nvim
 sudo apt install tmux
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 
+# == Utilities
+sudo apt install xbindkeys
+
 popd

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+layout=$(setxkbmap -query | grep layout | grep -o ca)
+echo $layout
+
+if [ -z "$layout" ]; then
+    echo "Switch to querty"
+    setxkbmap ca -variant fr
+else
+    echo "Switch to Dvorak"
+    setxkbmap us -variant dvp
+fi
