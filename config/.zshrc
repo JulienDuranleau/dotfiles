@@ -1,3 +1,6 @@
+export EDITOR=nvim
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
 export ANDROID_HOME=/home/julien/Android/Sdk
 export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export PATH=${PATH}:$HOME/bin
@@ -5,12 +8,8 @@ export PATH=${PATH}:$HOME/bin
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
 export PATH=$PATH:/usr/local/go/bin
 
-export EDITOR=nvim
-export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 export PATH=$PATH:~/.config/composer/vendor/bin
-
-export PATH=$PATH:~/scripts
+export PATH=$PATH:~/dotfiles/scripts
 
 export ZSH_DISABLE_COMPFIX=true
 
@@ -34,7 +33,7 @@ setopt GLOB_DOTS
 # == Fancier ls
 alias ls='ls --color -h -1 --group-directories-first'
 
-# == Swap escape and tab
+# == Set tab as escape
 /usr/bin/setxkbmap -option "caps:escape"
 
 # == Set typing speed
@@ -54,6 +53,7 @@ export FZF_DEFAULT_COMMAND='rg --files --follow'
 
 # == Aliases
 # alias dev=@See scripts/dev
+alias tmux='TERM=xterm-256color tmux'
 alias redev='tmux at -t'
 alias killdev='tmux kill-session -t'
 alias weather='curl wttr.in/Joliette'
