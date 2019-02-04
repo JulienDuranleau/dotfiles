@@ -228,3 +228,5 @@ nnoremap <script> <silent> <leader>?n :call cheat#navigate(1, 'A')<CR>
 nnoremap <script> <silent> <leader>?p :call cheat#navigate(-1,'A')<CR>
 " PHP CS Fixer
 nmap <Leader>F :!php-cs-fixer fix --using-cache=no % <cr>
+" Current file name without extension
+imap <Leader>fn <c-r>=expand("%:t:r")<cr>

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# restart xbindkeys daemon
+killall xbindkeys
+xbindkeys -f ~/.xbindkeysrc
