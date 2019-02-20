@@ -31,13 +31,17 @@ async function loop() {
 
     // --------- Song ---------
     //
-    const songStatus = (await exec('playerctl status')).stdout.replace('\n', '')
-    const songArtist = (await exec('playerctl metadata artist')).stdout.replace('\n', '')
-    const songName = (await exec('playerctl metadata title')).stdout.replace('\n', '')
-    output.push({
-        color: BLUE,
-        full_text: ` ♫ ${songStatus}: ${songName} by ${songArtist} ♫ `
-    })
+    try {
+        const songStatus = (await exec('playerctl status')).stdout.replace('\n', '')
+        const songArtist = (await exec('playerctl metadata artist')).stdout.replace('\n', '')
+        const songName = (await exec('playerctl metadata title')).stdout.replace('\n', '')
+        output.push({
+            color: BLUE,
+            full_text: ` ♫ ${songStatus}: ${songName} by ${songArtist} ♫ `
+        })
+    } catch (error) {
+
+    }
 
     // --------- Time ---------
     //
