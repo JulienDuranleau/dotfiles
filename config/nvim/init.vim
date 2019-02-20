@@ -5,13 +5,15 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-"Plug 'dbeniamine/cheat.sh-vim'
+Plug 'tpope/vim-eunuch'
+Plug 'dbeniamine/cheat.sh-vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -21,16 +23,19 @@ Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
 Plug 'posva/vim-vue'
 Plug 'leafgarland/typescript-vim'
+Plug 'elzr/vim-json'
+Plug 'heavenshell/vim-jsdoc'
+
 
 " For autocompletion
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-cssomni'
-Plug 'ncm2/ncm2-tern'
-Plug 'ncm2/ncm2-racer'
-Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-Plug 'phpactor/ncm2-phpactor'
+Plug 'ncm2/ncm2-tern',  {'do': 'npm install'} " JS
+Plug 'ncm2/ncm2-racer' " Rust
+Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'} " PHP
+Plug 'phpactor/ncm2-phpactor' " PHP
 Plug 'ncm2/ncm2-html-subscope'
 Plug 'ncm2/ncm2-markdown-subscope'
 call plug#end()
@@ -73,13 +78,16 @@ set wildmode=list:longest
 set list                            " Enable invisible character
 set listchars=tab:▸\ ,eol:¬         " Specifiy characters for invisibles
 
-:set inccommand=split
+set inccommand=split
 
 set diffopt+=vertical               " Vertical split diffs
 
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
+au BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css " Force multipe types for vue files
+
+autocmd FileType vue syntax sync fromstart " Fix broken highligh for multilang vue files
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
 
@@ -157,6 +165,20 @@ let g:go_highlight_function_calls = 1
 
 " ======== NERDTree plugin
 let NERDTreeShowHidden=1
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "m",
+    \ "Staged"    : "+",
+    \ "Untracked" : "*",
+    \ "Renamed"   : "->",
+    \ "Unmerged"  : "=",
+    \ "Deleted"   : "x",
+    \ "Dirty"     : "m",
+    \ "Clean"     : "c",
+    \ 'Ignored'   : 'i',
+    \ "Unknown"   : "?"
+    \ }
 nmap <F5> :NERDTreeToggle<CR>
 
 " ======== Javascript plugin
@@ -194,6 +216,9 @@ let g:CheatSheetDoNotMap=1
 " ======== PHP CS Fixer
 autocmd BufWritePost *.php silent execute "!php-cs-fixer fix --using-cache=no --no-interaction %"
 
+" ======== JSON
+let g:vim_json_syntax_conceal = 0
+
 
 
 " ======== Leader commands
@@ -217,8 +242,9 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
-nmap <Leader>, mcA,<esc>`c
 "imap <Leader>; <esc>mcA;<esc>`ca
+" Add , at the end of the line
+nmap <Leader>, mcA,<esc>`c
 vmap <Leader>; :'<,'>norm A;<esc>
 vmap <Leader>, :'<,'>norm A,<esc>
 " Cheat.sh | @see cheat.vim
@@ -230,3 +256,5 @@ nnoremap <script> <silent> <leader>?p :call cheat#navigate(-1,'A')<CR>
 nmap <Leader>F :!php-cs-fixer fix --using-cache=no % <cr>
 " Current file name without extension
 imap <Leader>fn <c-r>=expand("%:t:r")<cr>
+" JSDoc
+nmap <silent> <Leader>l <Plug>(jsdoc)
