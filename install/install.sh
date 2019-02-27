@@ -49,6 +49,8 @@ sudo apt install xbindkeys
 rm ~/.xbindkeysrc
 ln -s ~/dotfiles/config/.xbindkeysrc ~/.xbindkeysrc
 
+sudo apt install ripgrep
+
 # == Spotify
 snap install spotify
 

@@ -169,9 +169,10 @@ bar {
 
 exec_always feh --randomize --bg-fill ~/Pictures/wallpapers
 exec_always xrandr --output DP-1 --off --output HDMI-3 --off --output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x80 --rotate normal
+exec_always compton
 
 gaps inner 15 
-gaps outer 10
+gaps outer -14
 
 for_window [class="^.*"] border pixel 3
 
