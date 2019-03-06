@@ -1,0 +1,5 @@
+QTreeView {
+   color:white;
+   background-color:rgb(53,53,53);
+   selection-background-color:palette(highlight);
+}

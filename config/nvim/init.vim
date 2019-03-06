@@ -5,7 +5,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
@@ -13,12 +12,12 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-Plug 'dbeniamine/cheat.sh-vim'
+Plug 'KabbAmine/zeavim.vim'
+Plug 'machakann/vim-highlightedyank'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'StanAngeloff/php.vim'
-Plug 'machakann/vim-highlightedyank'
 Plug 'Raimondi/delimitMate'
 Plug 'srcery-colors/srcery-vim'
 Plug 'posva/vim-vue'
@@ -44,6 +43,7 @@ call plug#end()
 set t_Co=256
 colorscheme srcery
 let g:airline_theme='srcery'
+hi Comment ctermfg=238
 
 " ======== generic configs
 syntax on
@@ -97,6 +97,7 @@ hi DiffText ctermbg=26
 hi NonText ctermfg=236
 hi iCursor ctermfg=15
 hi Normal ctermbg=NONE
+
 " ======== Disable arrow keys
 no <down> <Nop>
 no <left> <Nop>
@@ -219,6 +220,9 @@ autocmd BufWritePost *.php silent execute "!php-cs-fixer fix --using-cache=no --
 " ======== JSON
 let g:vim_json_syntax_conceal = 0
 
+" ======== Zeal
+let g:zv_disable_mapping = 1
+let g:zv_zeal_args = '--stylesheet=$HOME/dotfiles/config/zeal/theme.qss'
 
 
 " ======== Leader commands
@@ -258,3 +262,6 @@ nmap <Leader>F :!php-cs-fixer fix --using-cache=no % <cr>
 imap <Leader>fn <c-r>=expand("%:t:r")<cr>
 " JSDoc
 nmap <silent> <Leader>l <Plug>(jsdoc)
+" Zeal
+nmap sd <Plug>ZVOperator
+nmap <leader>sd <Plug>ZVKeyDocset
