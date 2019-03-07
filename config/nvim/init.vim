@@ -14,6 +14,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'KabbAmine/zeavim.vim'
 Plug 'machakann/vim-highlightedyank'
+Plug 'airblade/vim-gitgutter'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -27,16 +28,7 @@ Plug 'heavenshell/vim-jsdoc'
 
 
 " For autocompletion
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-cssomni'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'} " JS
-Plug 'ncm2/ncm2-racer' " Rust
-Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'} " PHP
-Plug 'phpactor/ncm2-phpactor' " PHP
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-markdown-subscope'
+" @see https://github.com/neoclide/coc.nvim
 call plug#end()
 
 " ======== Theme
@@ -158,6 +150,17 @@ augroup CursorLineOnlyInActiveWindow
   autocmd WinLeave * setlocal nocursorline
 augroup END
 
+" ======= Change register
+" - Ex: qa  Create macro 'a'
+" - cra     Edit macro 'a'
+function! ChangeReg() abort
+    let r = nr2char(getchar())
+    if r =~# '[a-zA-Z0-9"@\-:.%#=*"~_/]'
+        call feedkeys("q:ilet @" . r . " = \<C-r>\<C-r>=string(@" . r . ")\<CR>\<ESC>", 'n')
+    endif
+endfunction
+nnoremap <silent> cr :call ChangeReg()<CR>
+
 " ======== go-vim plugin config
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -168,18 +171,6 @@ let g:go_highlight_function_calls = 1
 let NERDTreeShowHidden=1
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "m",
-    \ "Staged"    : "+",
-    \ "Untracked" : "*",
-    \ "Renamed"   : "->",
-    \ "Unmerged"  : "=",
-    \ "Deleted"   : "x",
-    \ "Dirty"     : "m",
-    \ "Clean"     : "c",
-    \ 'Ignored'   : 'i',
-    \ "Unknown"   : "?"
-    \ }
 nmap <F5> :NERDTreeToggle<CR>
 
 " ======== Javascript plugin
@@ -199,20 +190,17 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_inside_quotes = 1
 
 " ======== Ncm2 Autocompletion plugin
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+" set completeopt=noinsert,menuone,noselect
 " Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ======== Easy Align plugin
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
-" ======== Cheat.sh
-let g:CheatSheetDoNotMap=1
 
 " ======== PHP CS Fixer
 autocmd BufWritePost *.php silent execute "!php-cs-fixer fix --using-cache=no --no-interaction %"
@@ -224,9 +212,18 @@ let g:vim_json_syntax_conceal = 0
 let g:zv_disable_mapping = 1
 let g:zv_zeal_args = '--stylesheet=$HOME/dotfiles/config/zeal/theme.qss'
 
+" ======== Git Gutter
+let g:gitgutter_map_keys = 0
+hi GitGutterAdd ctermfg=255 ctermbg=22
+hi GitGutterChange ctermfg=255 ctermbg=130
+hi GitGutterDelete ctermfg=255 ctermbg=52
+hi GitGutterChangeDelete ctermfg=255 ctermbg=130
 
 " ======== Leader commands
 
+" Swap/move lines vertically
+vnoremap <C-k> :m-2<CR>gv
+vnoremap <C-j> :m '>+<CR>gv
 " Select previously pasted text
 nmap <leader>v `[V`]
 " Open vimrc
@@ -246,18 +243,10 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
-"imap <Leader>; <esc>mcA;<esc>`ca
 " Add , at the end of the line
 nmap <Leader>, mcA,<esc>`c
-vmap <Leader>; :'<,'>norm A;<esc>
-vmap <Leader>, :'<,'>norm A,<esc>
-" Cheat.sh | @see cheat.vim
-nnoremap <script> <silent> <leader>? :call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 0, '!')<CR>
-vnoremap <script> <silent> <leader>? :call cheat#cheat("", -1, -1, 2, 0, '!')<CR>
-nnoremap <script> <silent> <leader>?n :call cheat#navigate(1, 'A')<CR>
-nnoremap <script> <silent> <leader>?p :call cheat#navigate(-1,'A')<CR>
-" PHP CS Fixer
-nmap <Leader>F :!php-cs-fixer fix --using-cache=no % <cr>
+vmap <Leader>; :'<,'>norm A;<esc>,
+vmap <Leader>, :'<,'>norm A,<esc>,
 " Current file name without extension
 imap <Leader>fn <c-r>=expand("%:t:r")<cr>
 " JSDoc
@@ -265,3 +254,5 @@ nmap <silent> <Leader>l <Plug>(jsdoc)
 " Zeal
 nmap sd <Plug>ZVOperator
 nmap <leader>sd <Plug>ZVKeyDocset
+" Tmux Run last command
+nmap <silent> <leader>rl :!tmux send-keys -t right C-c ' !!' C-m C-m<cr>
