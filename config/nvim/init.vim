@@ -4,7 +4,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
@@ -15,6 +14,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'KabbAmine/zeavim.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -26,8 +26,10 @@ Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'heavenshell/vim-jsdoc'
 
+" Easy-motion? https://github.com/justinmk/vim-sneak
 
 " For autocompletion
+Plug 'ajh17/VimCompletesMe'
 " @see https://github.com/neoclide/coc.nvim
 call plug#end()
 
@@ -75,6 +77,10 @@ set inccommand=split
 set diffopt+=vertical               " Vertical split diffs
 
 let g:netrw_dirhistmax = 0          " disable netrwhist log file
+let g:netrw_banner = 0
+let g:netrw_browse_split = 5
+"let g:netrw_liststyle = 3
+"let g:netrw_winsize = 25
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
 au BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css " Force multipe types for vue files
@@ -126,10 +132,10 @@ imap <c-s> <esc>:w<cr>
 inoremap jj <ESC>
 
 " ======== Pane navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-l> <C-w>l
 
 " ======== Fuzzy find
 nnoremap <C-p> :Files<cr>
@@ -159,7 +165,18 @@ function! ChangeReg() abort
         call feedkeys("q:ilet @" . r . " = \<C-r>\<C-r>=string(@" . r . ")\<CR>\<ESC>", 'n')
     endif
 endfunction
-nnoremap <silent> cr :call ChangeReg()<CR>
+nnoremap <silent> <leader>cr :call ChangeReg()<CR>
+
+
+" ======= Netrw
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
+function! NetrwMapping()
+    nmap <buffer> e <cr>
+endfunction
 
 " ======== go-vim plugin config
 let g:go_highlight_types = 1
@@ -167,11 +184,6 @@ let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 
-" ======== NERDTree plugin
-let NERDTreeShowHidden=1
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
-nmap <F5> :NERDTreeToggle<CR>
 
 " ======== Javascript plugin
 let g:javascript_plugin_jsdoc = 1
@@ -219,6 +231,14 @@ hi GitGutterChange ctermfg=255 ctermbg=130
 hi GitGutterDelete ctermfg=255 ctermbg=52
 hi GitGutterChangeDelete ctermfg=255 ctermbg=130
 
+" ========  Vim Tmux Navigator
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr><Paste>
+
 " ======== Leader commands
 
 " Swap/move lines vertically
@@ -227,7 +247,7 @@ vnoremap <C-j> :m '>+<CR>gv
 " Select previously pasted text
 nmap <leader>v `[V`]
 " Open vimrc
-nmap <leader>nvim <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nmap <leader>nvim :vsp $MYVIMRC<cr>
 " Quit file
 nnoremap <leader>q :q<cr>
 " Fuzzy search word under cursor in file names
@@ -243,16 +263,21 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
-" Add , at the end of the line
 nmap <Leader>, mcA,<esc>`c
 vmap <Leader>; :'<,'>norm A;<esc>,
 vmap <Leader>, :'<,'>norm A,<esc>,
 " Current file name without extension
+" Add , at the end of the line
 imap <Leader>fn <c-r>=expand("%:t:r")<cr>
 " JSDoc
 nmap <silent> <Leader>l <Plug>(jsdoc)
 " Zeal
 nmap sd <Plug>ZVOperator
 nmap <leader>sd <Plug>ZVKeyDocset
-" Tmux Run last command
-nmap <silent> <leader>rl :!tmux send-keys -t right C-c ' !!' C-m C-m<cr>
+" Tmux run last command    -- C-c = cancel current cmd, C-p = retype last cmd, C-o = execute line
+nmap <leader>rr :silent exec "!tmux send-keys -t right C-c && tmux send-keys -t right C-p C-o"<cr>
+" Tmux send visual selection to other pane
+vmap <leader>ss "zy :silent exec '!tmux send -t right "' . substitute(escape(@z, '\"$'), '\n', '" Enter "', "g") . '" Enter'<cr>
+" Netrw
+nmap <F5> :Lex<cr>
+nmap <leader>e :Ex!<cr>

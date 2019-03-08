@@ -61,7 +61,7 @@ alias cddev='cd ~/workbench/projects/$(\ls ~/workbench/projects/ | fzf)/www'
 alias showdev='ngrok start --config ~/workbench/projects/$(\ls ~/workbench/projects/ | fzf)/ngrok.yml'
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
-alias alacrittyfs="wmctrl -r 'alacritty' -b toggle,fullscreen"
+alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 
 # usage: how_in php list array keys
 how_in() { where="$1"; shift;IFS=+ curl "https://cht.sh/$where/$*?Q" }
