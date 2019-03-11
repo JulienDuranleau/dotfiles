@@ -6,4 +6,4 @@ else
     cd $2
 fi
 
-tmux new-session -s $1 \; rename-window 'Editor' \; send-keys 'nvim' C-m \; send-keys ':NERDTree' C-m \; new-window \; rename-window 'Terminal' \; next-window \;
+tmux new-session -s $1 \; rename-window 'Editor' \; send-keys 'nvim' C-m \; new-window \; rename-window 'Terminal' \; next-window \;

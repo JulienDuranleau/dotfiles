@@ -59,6 +59,7 @@ set iskeyword+=-                    " Add "-" to the w text object
 set timeoutlen=600                  " Leader timeout
 set updatetime=100                  " Update speed for git-gutter
 set noswapfile
+set synmaxcol=200
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
