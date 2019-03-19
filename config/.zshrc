@@ -49,7 +49,7 @@ setopt noflowcontrol
 
 # == Enable FZF shortcuts and completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --follow'
+export FZF_DEFAULT_COMMAND='rg --files --follow --hidden -u --glob "!.git" --glob "!vendor/" --glob "!node_modules/"'
 
 # == Aliases
 # alias dev=@See scripts/dev
@@ -62,6 +62,7 @@ alias showdev='ngrok start --config ~/workbench/projects/$(\ls ~/workbench/proje
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
 alias nethack='ssh nethack@alt.org'
 alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias octoup='php artisan october:up --no-ansi'
 
 # usage: how_in php list array keys
 how_in() { where="$1"; shift;IFS=+ curl "https://cht.sh/$where/$*?Q" }
