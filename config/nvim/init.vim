@@ -15,6 +15,7 @@ Plug 'KabbAmine/zeavim.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'rafaqz/ranger.vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -26,10 +27,11 @@ Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'heavenshell/vim-jsdoc'
 
-" Easy-motion? https://github.com/justinmk/vim-sneak
+" Easy-motion? https://github.com/justinmk/vim-sneak 
 
 " For autocompletion
 Plug 'ajh17/VimCompletesMe'
+" @see https://github.com/Shougo/deoplete.nvim
 " @see https://github.com/neoclide/coc.nvim
 call plug#end()
 
@@ -59,7 +61,9 @@ set iskeyword+=-                    " Add "-" to the w text object
 set timeoutlen=600                  " Leader timeout
 set updatetime=100                  " Update speed for git-gutter
 set noswapfile
-set synmaxcol=200
+set synmaxcol=200                   " Set max highlight column. Avoid loooong lines
+set undodir=~/.vim/undodir          " Set undo savefile location
+set undofile                        " Enable undo savefile to undo after exit
 
 set splitbelow                      " New h-split goes below
 set splitright                      " New v-split goes to the right
@@ -77,16 +81,18 @@ set inccommand=split
 
 set diffopt+=vertical               " Vertical split diffs
 
-let g:netrw_dirhistmax = 0          " disable netrwhist log file
-let g:netrw_banner = 0
-let g:netrw_browse_split = 5
+"let g:netrw_dirhistmax = 0          " disable netrwhist log file
+"let g:netrw_banner = 0
+"let g:netrw_browse_split = 5
 "let g:netrw_liststyle = 3
 "let g:netrw_winsize = 25
+"let g:netrw_localrmdir="rm -r"
 
 au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
 au BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css " Force multipe types for vue files
 
 autocmd FileType vue syntax sync fromstart " Fix broken highligh for multilang vue files
+autocmd VimResized * wincmd =        " Auto ajust splits on vim resize (eg: tmux resize or zoom)
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
 
@@ -170,14 +176,14 @@ nnoremap <silent> <leader>cr :call ChangeReg()<CR>
 
 
 " ======= Netrw
-augroup netrw_mapping
-    autocmd!
-    autocmd filetype netrw call NetrwMapping()
-augroup END
+" augroup netrw_mapping
+"     autocmd!
+"     autocmd filetype netrw call NetrwMapping()
+" augroup END
 
-function! NetrwMapping()
-    nmap <buffer> e <cr>
-endfunction
+" function! NetrwMapping()
+"     nmap <buffer> e <cr>
+" endfunction
 
 " ======== go-vim plugin config
 let g:go_highlight_types = 1
@@ -202,13 +208,6 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_inside_quotes = 1
 
-" ======== Ncm2 Autocompletion plugin
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" set completeopt=noinsert,menuone,noselect
-" Use <TAB> to select the popup menu:
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " ======== Easy Align plugin
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -232,13 +231,27 @@ hi GitGutterChange ctermfg=255 ctermbg=130
 hi GitGutterDelete ctermfg=255 ctermbg=52
 hi GitGutterChangeDelete ctermfg=255 ctermbg=130
 
-" ========  Vim Tmux Navigator
+" ======== Vim Tmux Navigator
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr><Paste>
+
+" ======= Ranger
+nmap <leader>rr :RangerEdit<cr>
+nmap <leader>rv :RangerVSplit<cr>
+nmap <leader>rs :RangerSplit<cr>
+nmap <leader>rt :RangerTab<cr>
+nmap <leader>ri :RangerInsert<cr>
+nmap <leader>ra :RangerAppend<cr>
+nmap <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
+nmap <leader>rd :RangerCD<cr>
+nmap <leader>rld :RangerLCD<cr>
+
+" ======= Commentary
+autocmd FileType php setlocal commentstring=\/\/\ %s
 
 " ======== Leader commands
 
@@ -264,21 +277,21 @@ nmap <Leader>z ]c <cr>
 nmap <Leader>x [c <cr>
 " Add ; at the end of the line
 nmap <Leader>; mcA;<esc>`c
-nmap <Leader>, mcA,<esc>`c
 vmap <Leader>; :'<,'>norm A;<esc>,
+" Add , at the end of the line
+nmap <Leader>, mcA,<esc>`c
 vmap <Leader>, :'<,'>norm A,<esc>,
 " Current file name without extension
-" Add , at the end of the line
 imap <Leader>fn <c-r>=expand("%:t:r")<cr>
-" JSDoc
+" JSDoc - Add jsdoc to function
 nmap <silent> <Leader>l <Plug>(jsdoc)
-" Zeal
+" Zeal - search docs
 nmap sd <Plug>ZVOperator
 nmap <leader>sd <Plug>ZVKeyDocset
 " Tmux run last command    -- C-c = cancel current cmd, C-p = retype last cmd, C-o = execute line
-nmap <leader>rr :silent exec "!tmux send-keys -t right C-c && tmux send-keys -t right C-p C-o"<cr>
+nmap <leader>tr :silent exec "!tmux send-keys -t right C-c && tmux send-keys -t right C-p C-o"<cr>
 " Tmux send visual selection to other pane
-vmap <leader>ss "zy :silent exec '!tmux send -t right "' . substitute(escape(@z, '\"$'), '\n', '" Enter "', "g") . '" Enter'<cr>
+vmap <leader>ts "zy :silent exec '!tmux send -t right "' . substitute(escape(@z, '\"$'), '\n', '" Enter "', "g") . '" Enter'<cr>
 " Netrw
-nmap <F5> :Lex<cr>
-nmap <leader>e :Ex!<cr>
+" nmap <F5> :Lex<cr>
+" nmap <leader>e :Ex!<cr>
