@@ -13,9 +13,9 @@ git clone https://github.com/JulienDuranleau/dotfiles.git ~/dotfiles
 mkdir ~/bin
 
 # == Terminal
-sudo apt install qterminal
-rm -r ~/.config/qterminal.org
-ln -s ~/dotfiles/config/qterminal.org ~/.config/qterminal.org
+sudo apt install xfce4-terminal
+rm -r ~/.config/xfce4/terminal/terminalrc
+ln -s ~/dotfiles/config/xfce4-terminal/terminalrc ~/.config/xfce4/terminal/terminalrc
 
 # == Nodejs
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
