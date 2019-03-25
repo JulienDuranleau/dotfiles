@@ -16,6 +16,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'rafaqz/ranger.vim'
+Plug 'SirVer/ultisnips'
 
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -39,7 +40,6 @@ call plug#end()
 set t_Co=256
 colorscheme srcery
 let g:airline_theme='srcery'
-hi Comment ctermfg=238
 
 " ======== generic configs
 syntax on
@@ -96,6 +96,7 @@ autocmd VimResized * wincmd =        " Auto ajust splits on vim resize (eg: tmux
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
 
+hi Comment ctermfg=239
 hi DiffAdd ctermbg=22
 "hi DiffChange guibg=#BBBB33
 hi DiffText ctermbg=26
@@ -249,6 +250,12 @@ nmap <leader>ra :RangerAppend<cr>
 nmap <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
 nmap <leader>rd :RangerCD<cr>
 nmap <leader>rld :RangerLCD<cr>
+
+" ======= Ultisnips
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
 
 " ======= Commentary
 autocmd FileType php setlocal commentstring=\/\/\ %s

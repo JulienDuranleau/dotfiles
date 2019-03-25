@@ -63,6 +63,7 @@ alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a 
 alias nethack='ssh nethack@alt.org'
 alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias octoup='php artisan october:up --no-ansi'
+markdown() { pandoc --css ~/dotfiles/config/pandoc/styles.css --quiet --self-contained "$1" -o /tmp/md.html; firefox /tmp/md.html }
 
 # usage: how_in php list array keys
 how_in() { where="$1"; shift;IFS=+ curl "https://cht.sh/$where/$*?Q" }
