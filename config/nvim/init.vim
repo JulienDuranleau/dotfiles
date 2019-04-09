@@ -47,6 +47,7 @@ filetype plugin indent on
 set cursorline
 set number relativenumber           " line numbers relative to current line
 set numberwidth=4                   " line number width
+set signcolumn=yes                  " Always show full width line number column
 set tabstop=4                        
 set shiftwidth=4
 set expandtab                       " Turn tabs into spaces
@@ -71,8 +72,8 @@ set splitright                      " New v-split goes to the right
 set foldmethod=indent               " Fold levels based on indent level
 set foldlevel=10                    " Fold level when opening files
 
-set wildmenu
-set wildmode=list:longest
+set wildoptions=pum                 " Popup list for commands (ex: e: <tab>) 
+set pumblend=20                     " Popup bg transparency
 
 set list                            " Enable invisible character
 set listchars=tab:▸\ ,eol:¬         " Specifiy characters for invisibles
