@@ -1,8 +1,7 @@
 let g:mapleader = "\<Space>"
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
@@ -11,35 +10,22 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-Plug 'KabbAmine/zeavim.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'rafaqz/ranger.vim'
 Plug 'SirVer/ultisnips'
 
-Plug 'pangloss/vim-javascript'
-Plug 'rust-lang/rust.vim'
-Plug 'StanAngeloff/php.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'srcery-colors/srcery-vim'
-Plug 'posva/vim-vue'
-Plug 'leafgarland/typescript-vim'
-Plug 'elzr/vim-json'
-Plug 'heavenshell/vim-jsdoc'
-
-" Easy-motion? https://github.com/justinmk/vim-sneak 
-
+Plug 'mhartington/oceanic-next' 
 " For autocompletion
-Plug 'ajh17/VimCompletesMe'
-" @see https://github.com/Shougo/deoplete.nvim
 " @see https://github.com/neoclide/coc.nvim
 call plug#end()
 
 " ======== Theme
+set background=dark
 set t_Co=256
-colorscheme srcery
-let g:airline_theme='srcery'
+set termguicolors
+colorscheme OceanicNext
+let g:airline_theme='oceanicnext'
 
 " ======== generic configs
 syntax on
@@ -89,21 +75,9 @@ set diffopt+=vertical               " Vertical split diffs
 "let g:netrw_winsize = 25
 "let g:netrw_localrmdir="rm -r"
 
-au BufRead,BufNewFile *.htm set filetype=php " Force php type for htm (October templates)
-au BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css " Force multipe types for vue files
-
-autocmd FileType vue syntax sync fromstart " Fix broken highligh for multilang vue files
 autocmd VimResized * wincmd =        " Auto ajust splits on vim resize (eg: tmux resize or zoom)
 
 let ind = indent(prevnonblank(v:lnum - 1)) " Autoindent new lines even after empty lines
-
-hi Comment ctermfg=239
-hi DiffAdd ctermbg=22
-"hi DiffChange guibg=#BBBB33
-hi DiffText ctermbg=26
-hi NonText ctermfg=236
-hi iCursor ctermfg=15
-hi Normal ctermbg=NONE
 
 " ======== Disable arrow keys
 no <down> <Nop>
@@ -187,44 +161,10 @@ nnoremap <silent> <leader>cr :call ChangeReg()<CR>
 "     nmap <buffer> e <cr>
 " endfunction
 
-" ======== go-vim plugin config
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-
-
-" ======== Javascript plugin
-let g:javascript_plugin_jsdoc = 1
-
-" ======== Rust plugin
-let g:rustfmt_autosave = 1
 
 " ======== Yank highlight plugin
 let g:highlightedyank_highlight_duration = 1000
 
-" ======== DelemitMate plugin
-let g:delimitMate_matchpairs = ""
-let g:delimitMate_jump_expansion = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_inside_quotes = 1
-
-" ======== Easy Align plugin
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" ======== PHP CS Fixer
-autocmd BufWritePost *.php silent execute "!php-cs-fixer fix --using-cache=no --no-interaction %"
-
-" ======== JSON
-let g:vim_json_syntax_conceal = 0
-
-" ======== Zeal
-let g:zv_disable_mapping = 1
-let g:zv_zeal_args = '--stylesheet=$HOME/dotfiles/config/zeal/theme.qss'
 
 " ======== Git Gutter
 let g:gitgutter_map_keys = 0
@@ -241,16 +181,6 @@ nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr><Paste>
 
-" ======= Ranger
-nmap <leader>rr :RangerEdit<cr>
-nmap <leader>rv :RangerVSplit<cr>
-nmap <leader>rs :RangerSplit<cr>
-nmap <leader>rt :RangerTab<cr>
-nmap <leader>ri :RangerInsert<cr>
-nmap <leader>ra :RangerAppend<cr>
-nmap <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
-nmap <leader>rd :RangerCD<cr>
-nmap <leader>rld :RangerLCD<cr>
 
 " ======= Ultisnips
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -258,8 +188,6 @@ let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
 
-" ======= Commentary
-autocmd FileType php setlocal commentstring=\/\/\ %s
 
 " ======== Leader commands
 
@@ -289,13 +217,6 @@ vmap <Leader>; :'<,'>norm A;<esc>,
 " Add , at the end of the line
 nmap <Leader>, mcA,<esc>`c
 vmap <Leader>, :'<,'>norm A,<esc>,
-" Current file name without extension
-imap <Leader>fn <c-r>=expand("%:t:r")<cr>
-" JSDoc - Add jsdoc to function
-nmap <silent> <Leader>l <Plug>(jsdoc)
-" Zeal - search docs
-nmap sd <Plug>ZVOperator
-nmap <leader>sd <Plug>ZVKeyDocset
 " Tmux run last command    -- C-c = cancel current cmd, C-p = retype last cmd, C-o = execute line
 nmap <leader>tr :silent exec "!tmux send-keys -t right C-c && tmux send-keys -t right C-p C-o"<cr>
 " Tmux send visual selection to other pane

@@ -1,0 +1,21 @@
+export EDITOR=nvim
+
+export PATH=$PATH:~/dotfiles/scripts
+
+# == Fancier ls
+alias ls='ls --color -h -1 --group-directories-first'
+
+# == Aliases
+# alias dev=@See scripts/dev
+# alias tmux='TERM=xterm-256color tmux'
+alias lsdev='tmux ls'
+alias redev='tmux at -t'
+alias killdev='tmux kill-session -t'
+alias weather='curl wttr.in/Joliette'
+alias cddev='cd ~/workbench/$(\ls ~/workbench/ | fzf)'
+alias showdev='ngrok start --config ~/workbench/$(\ls ~/workbench/ | fzf)/ngrok.yml'
+alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -100'\'
+alias nethack='ssh nethack@alt.org'
+alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias kp='pk'
+

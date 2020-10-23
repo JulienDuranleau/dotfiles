@@ -3,26 +3,10 @@
 if [ -z $1 ]; then
     echo "Error: Folder name not defined"
 else
-    path=~/workbench/projects/$1
+    path=~/workbench/$1
 
     # Create folder structure
     mkdir $path
-    mkdir $path/www
-
-    # Create empty git
-    pushd $path/www/ > /dev/null
-    git init > /dev/null
-    popd > /dev/null
-
-    # Write ngrok file
-    echo "$(cat << END
-tunnels:
-  www:
-    proto: http
-    addr: 80
-    host_header: $1
-END
-    )" > $path/ngrok.yml 
 
     # Print out
     echo "Created $path"
